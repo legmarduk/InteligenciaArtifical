@@ -14,8 +14,8 @@ public class Jugador implements Constantes{
     public Escenario escenario;
     
     public Jugador(Escenario escenario){
-        this.filaJugador = 8;
-        this.columnaJugador = 2;
+        this.filaJugador = 4;
+        this.columnaJugador = 4;
         this.escenario = escenario;
     }
     
@@ -34,7 +34,7 @@ public class Jugador implements Constantes{
         if(columnaJugador-1 >= 0){
             String tipo = escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador -1].obtenerTipo();
             escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador].TipoCelda(tipo);
-            escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador-1].TipoCelda(TIPO_JUGADOR);
+            escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador-1].TipoCelda(TIPO_JUGADORI);
             this.columnaJugador--;
         }
 
@@ -44,7 +44,7 @@ public class Jugador implements Constantes{
         if(filaJugador-1 >=0){
             String tipo = escenario.obtenerCeldas()[this.filaJugador -1][this.columnaJugador].obtenerTipo();
             escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador].TipoCelda(tipo);
-            escenario.obtenerCeldas()[this.filaJugador -1][this.columnaJugador].TipoCelda(TIPO_JUGADOR);
+            escenario.obtenerCeldas()[this.filaJugador -1][this.columnaJugador].TipoCelda(TIPO_JUGADORAR);
             this.filaJugador--;    
         }
         
@@ -55,7 +55,7 @@ public class Jugador implements Constantes{
         if(filaJugador +1 <CELDA_LARGO_ESCENARIO){
             String tipo= escenario.obtenerCeldas()[this.filaJugador +1][this.columnaJugador].obtenerTipo();
             escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador].TipoCelda(tipo);
-            escenario.obtenerCeldas()[this.filaJugador +1][this.columnaJugador].TipoCelda(TIPO_JUGADOR);
+            escenario.obtenerCeldas()[this.filaJugador +1][this.columnaJugador].TipoCelda(TIPO_JUGADORAB);
             this.filaJugador++;
         }
 

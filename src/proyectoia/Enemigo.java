@@ -6,17 +6,20 @@ import java.util.logging.Logger;
 
 public class Enemigo implements Constantes,Runnable{
     
-    public int filaEnemigo1;
-    public int columnaEnemigo1;
+    public int filaEnemigo1,filaEnemigo2;
+    public int columnaEnemigo1,columnaEnemigo2;
     public Escenario escenario;
     public Celda[][] c;
     /*hilos*/
     public boolean corriendo;
     public Thread hilo;
     
-    public Enemigo(Escenario escenario){
-        this.filaEnemigo1=9;
-        this.columnaEnemigo1=9;
+    public Enemigo(Escenario escenario, int filaEnemigo, int columnaEnemigo){
+        this.filaEnemigo1=filaEnemigo;
+        this.columnaEnemigo1=columnaEnemigo;
+       /* this.filaEnemigo2=4;
+        this.columnaEnemigo2=8;*/
+        
         this.escenario= escenario;
         this.c=escenario.obtenerCeldas();
         
@@ -27,8 +30,12 @@ public class Enemigo implements Constantes,Runnable{
     public void moverEnemigoDerecha(){
     if(columnaEnemigo1+1 < CELDA_ANCHO_ESCENARIO){
         if(c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_MURALLA &&
-          c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_RECOMPENSA &&
-          c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_JUGADOR){
+           c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_MURALLABISUNO &&
+           c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_MURALLABISDOS &&
+           c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_MURALLABISTRES &&
+           c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_MURALLABISCUATRO &&
+           c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_RECOMPENSA &&
+           c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_JUGADOR){
             
             
                 String tipo = escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1+1].obtenerTipo();
@@ -42,8 +49,12 @@ public class Enemigo implements Constantes,Runnable{
     public void moverEnemigoIzquierda(){
     if(columnaEnemigo1-1 >= 0){
         if(c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_MURALLA &&
-            c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_RECOMPENSA &&
-            c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_JUGADOR){
+           c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_MURALLABISUNO &&
+           c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_MURALLABISDOS &&
+           c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_MURALLABISTRES &&
+           c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_MURALLABISCUATRO &&
+           c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_RECOMPENSA &&
+           c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_JUGADOR){
             
             
                 String tipo = escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1-1].obtenerTipo();
@@ -58,6 +69,10 @@ public class Enemigo implements Constantes,Runnable{
     public void moverEnemigoArriba(){
     if(filaEnemigo1-1 >=0){
         if(c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLA &&
+           c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLABISUNO &&
+           c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLABISDOS &&
+           c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLABISTRES &&
+           c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLABISCUATRO &&
            c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()!=TIPO_RECOMPENSA &&
            c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()!=TIPO_JUGADOR)
         {
@@ -73,6 +88,10 @@ public class Enemigo implements Constantes,Runnable{
     
     if(filaEnemigo1+1 < CELDA_LARGO_ESCENARIO){
         if(c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLA &&
+           c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLABISUNO &&
+           c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLABISDOS &&
+           c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLABISTRES &&
+           c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLABISCUATRO &&
            c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()!=TIPO_RECOMPENSA &&
            c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()!=TIPO_JUGADOR)
         {   
@@ -116,14 +135,13 @@ public class Enemigo implements Constantes,Runnable{
                 
                 delta=0.0;           
             }
-        }
-        
+        }      
     }
     
     public void movimientoAleatorio(){
         Random r = new Random();
         int direccion = r.nextInt(4);//genera numeros entre 0 y 3
-        System.out.println("movimiento: "+direccion);
+        //System.out.println("movimiento: "+direccion);
         switch(direccion){
             case 0: this.moverEnemigoArriba();
                 break;
@@ -134,6 +152,5 @@ public class Enemigo implements Constantes,Runnable{
             case 3: this.moverEnemigoIzquierda();
                 break;
         }
-    }
-    
+    }  
 }
