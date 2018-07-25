@@ -7,40 +7,35 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JComponent;
 
-
-public class Lienzo extends JComponent implements Constantes, KeyListener, Runnable{
+public class Lienzo extends JComponent implements Constantes, KeyListener,Runnable{
     public Escenario escenario;
-    
     public boolean corriendo;/*si jugador muere para el hilo*/
     public Thread hilo;
+    public  Tiempo t;
     
     
-    public Lienzo(){
-        escenario = new Escenario();/* CREO UN OBJETO ESCENARIO EN LA CLASE Lienzo*/
-       
+    public Lienzo(Tiempo t){
+        this.t=t;
+        escenario = new Escenario(t);/* CREO UN OBJETO ESCENARIO EN LA CLASE Lienzo*/
         this.setFocusable(true);
         this.setBackground(Color.BLACK);
         this.addKeyListener(this);
     
-        
         hilo = new Thread(this);
         start();
-        
     }
-    
     /*eventos de teclados para mover el jugador */
     @Override
     public void paint(Graphics g){
-     
+        
         escenario.paintComponent(g);/*pinto escenario en clase lienzo*/
-    
+        
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
     }
-
+    
     @Override
     public void keyPressed(KeyEvent e) {
        escenario.moverJugador(e);
@@ -48,12 +43,12 @@ public class Lienzo extends JComponent implements Constantes, KeyListener, Runna
     }
 
     @Override
-    public void keyReleased(KeyEvent e) {
-        
+    public void keyReleased(KeyEvent e) {    
     }
 
     /*hilo funciona con star y para con el stop para cuando pierdas*/
     private synchronized void start(){
+
         corriendo = true;
         hilo.start();
     }
@@ -84,12 +79,7 @@ public class Lienzo extends JComponent implements Constantes, KeyListener, Runna
                 //System.out.println("repinto");
             }
             repaint();
-        }
-                
-                
-                
-                
-                
+        }       
     }
-    
+   
 }

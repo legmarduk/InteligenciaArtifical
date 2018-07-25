@@ -3,6 +3,7 @@ package proyectoia;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Enemigo implements Constantes,Runnable{
     
@@ -13,78 +14,101 @@ public class Enemigo implements Constantes,Runnable{
     /*hilos*/
     public boolean corriendo;
     public Thread hilo;
+    public IANoInformada ia;
     
-    public Enemigo(Escenario escenario){
-        this.filaEnemigo1=9;
-        this.columnaEnemigo1=9;
+    public Enemigo(Escenario escenario, int filaEnemigo, int columnaEnemigo){
+        this.filaEnemigo1=filaEnemigo;
+        this.columnaEnemigo1=columnaEnemigo;
+
+        /*para que funcione la ia */
+        //this.ia=new IANoInformada(this.escenario);
+        //ia.busquedaPorAnchura(this.filaEnemigo1,this.columnaEnemigo1, 10, 10);
+        /**/
         this.escenario= escenario;
         this.c=escenario.obtenerCeldas();
-        
         this.hilo=new Thread(this);
         start();
     }
     
     public void moverEnemigoDerecha(){
-    if(columnaEnemigo1+1 < CELDA_ANCHO_ESCENARIO){
-        if(c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_MURALLA &&
-          c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_RECOMPENSA &&
-          c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()!=TIPO_JUGADOR){
-            
-            
+        if(columnaEnemigo1+1 < CELDA_ANCHO_ESCENARIO){
+            if(c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()==TIPO_VACIO)
+            {
                 String tipo = escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1+1].obtenerTipo();
                 escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1].TipoCelda(tipo);
                 escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1+1].TipoCelda(TIPO_ENEMIGO);
                 this.columnaEnemigo1++;
+            }else{
+                if(c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()==TIPO_JUGADOR || c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()==TIPO_JUGADORAB ||
+                   c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()==TIPO_JUGADORAR || c[filaEnemigo1][columnaEnemigo1+1].obtenerTipo()==TIPO_JUGADORI)
+                {
+                    JOptionPane.showMessageDialog(null, "PERDISTE");
+                    
+                }
             }
         }       
     }
     
     public void moverEnemigoIzquierda(){
-    if(columnaEnemigo1-1 >= 0){
-        if(c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_MURALLA &&
-            c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_RECOMPENSA &&
-            c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()!=TIPO_JUGADOR){
-            
-            
+        if(columnaEnemigo1-1 >= 0){
+            if(c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()==TIPO_VACIO)
+            {
                 String tipo = escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1-1].obtenerTipo();
                 escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1].TipoCelda(tipo);
                 escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1-1].TipoCelda(TIPO_ENEMIGO);
                 this.columnaEnemigo1--;
+            }else{
+                if(c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()==TIPO_JUGADOR || c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()==TIPO_JUGADORAB ||
+                   c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()==TIPO_JUGADORAR || c[filaEnemigo1][columnaEnemigo1-1].obtenerTipo()==TIPO_JUGADORI)
+                {
+                JOptionPane.showMessageDialog(null, "PERDISTE");
+                
+                }
             }
         }       
     }
     
     
     public void moverEnemigoArriba(){
-    if(filaEnemigo1-1 >=0){
-        if(c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLA &&
-           c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()!=TIPO_RECOMPENSA &&
-           c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()!=TIPO_JUGADOR)
-        {
-            String tipo = escenario.obtenerCeldas()[this.filaEnemigo1 -1][this.columnaEnemigo1].obtenerTipo();
-            escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1].TipoCelda(tipo);
-            escenario.obtenerCeldas()[this.filaEnemigo1 -1][this.columnaEnemigo1].TipoCelda(TIPO_ENEMIGO);
-            this.filaEnemigo1--; 
-           }
-    }     
+        if(filaEnemigo1-1 >=0){
+            if(c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()== TIPO_VACIO)
+            {
+                String tipo = escenario.obtenerCeldas()[this.filaEnemigo1 -1][this.columnaEnemigo1].obtenerTipo();
+                escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1].TipoCelda(tipo);
+                escenario.obtenerCeldas()[this.filaEnemigo1 -1][this.columnaEnemigo1].TipoCelda(TIPO_ENEMIGO);
+                this.filaEnemigo1--; 
+           }else{
+                
+                if(c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()== TIPO_JUGADOR || c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()== TIPO_JUGADORAB ||
+                   c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()== TIPO_JUGADORAR || c[filaEnemigo1 -1][columnaEnemigo1].obtenerTipo()== TIPO_JUGADORI)
+                {
+                JOptionPane.showMessageDialog(null, "PERDISTE");
+                
+                }
+            }
+        }     
     }
     
     public void moverEnemigoAbajo(){
     
-    if(filaEnemigo1+1 < CELDA_LARGO_ESCENARIO){
-        if(c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()!=TIPO_MURALLA &&
-           c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()!=TIPO_RECOMPENSA &&
-           c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()!=TIPO_JUGADOR)
-        {   
-            String tipo = escenario.obtenerCeldas()[this.filaEnemigo1 +1][this.columnaEnemigo1].obtenerTipo();
-            escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1].TipoCelda(tipo);
-            escenario.obtenerCeldas()[this.filaEnemigo1 +1][this.columnaEnemigo1].TipoCelda(TIPO_ENEMIGO);
-            this.filaEnemigo1++; 
-        }
+        if(filaEnemigo1+1 < CELDA_LARGO_ESCENARIO){
+            if(c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()==TIPO_VACIO)
+            {   
+                String tipo = escenario.obtenerCeldas()[this.filaEnemigo1 +1][this.columnaEnemigo1].obtenerTipo();
+                escenario.obtenerCeldas()[this.filaEnemigo1][this.columnaEnemigo1].TipoCelda(tipo);
+                escenario.obtenerCeldas()[this.filaEnemigo1 +1][this.columnaEnemigo1].TipoCelda(TIPO_ENEMIGO);
+                this.filaEnemigo1++; 
+            }else{
+            
+                if(c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()==TIPO_JUGADOR || c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()==TIPO_JUGADORAB ||
+                   c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()==TIPO_JUGADORAR || c[filaEnemigo1 +1][columnaEnemigo1].obtenerTipo()==TIPO_JUGADORI)
+                {
+                    JOptionPane.showMessageDialog(null, "PERDISTE");
+                    
+                }
+            }
+        }   
     }
-        
-    }
-    
     
   private synchronized void start(){
         corriendo = true;
@@ -111,19 +135,19 @@ public class Enemigo implements Constantes,Runnable{
             ultimaVez = ahora;
             
             if(delta >=tiempoEspera){
-                
-                this.movimientoAleatorio();
+                this.movimientoAleatorio(); 
+              
+               //ia.busquedaPorAnchura(this.filaEnemigo1,this.columnaEnemigo2, 10, 10);
                 
                 delta=0.0;           
             }
-        }
-        
+        }      
     }
     
     public void movimientoAleatorio(){
         Random r = new Random();
         int direccion = r.nextInt(4);//genera numeros entre 0 y 3
-        System.out.println("movimiento: "+direccion);
+        //System.out.println("movimiento: "+direccion);
         switch(direccion){
             case 0: this.moverEnemigoArriba();
                 break;
@@ -134,6 +158,5 @@ public class Enemigo implements Constantes,Runnable{
             case 3: this.moverEnemigoIzquierda();
                 break;
         }
-    }
-    
+    }  
 }
