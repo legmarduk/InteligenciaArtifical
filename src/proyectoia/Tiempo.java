@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 public class Tiempo extends JPanel implements Runnable {
     public Integer tiempoRestante =30;
     public Integer tiempoTotal=0;
@@ -15,7 +14,6 @@ public class Tiempo extends JPanel implements Runnable {
     public JLabel labelTiempoTotal;
     boolean corriendo;
     Thread hilo;
-    
     
     public Tiempo()
     {
@@ -32,17 +30,13 @@ public class Tiempo extends JPanel implements Runnable {
         this.hilo = new Thread(this);
         this.start();
     }
-    
-    
-    
-    
-    
-    private synchronized void start(){
+
+    public synchronized void start(){
         corriendo = true;
         hilo.start();
     }
     
-    private synchronized void stop(){
+    public synchronized void stop(){
         corriendo = false;
         try {
             hilo.join();
@@ -82,6 +76,10 @@ public class Tiempo extends JPanel implements Runnable {
                 delta=0.0;           
             }
         }    
+    }
+    
+    public void sumarTiempo(int tiempo){
+        this.tiempoRestante= tiempoRestante+tiempo;
     }
     
 }

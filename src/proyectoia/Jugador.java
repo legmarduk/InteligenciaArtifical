@@ -1,5 +1,6 @@
 package proyectoia;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Jugador implements Constantes{
@@ -7,12 +8,14 @@ public class Jugador implements Constantes{
     public int filaJugador;
     public int columnaJugador;
     public Escenario escenario;
-   
+    public Tiempo t;
 
-    public Jugador(Escenario escenario){
-        this.filaJugador = 4;
-        this.columnaJugador = 4;
+    public Jugador(Escenario escenario,Tiempo t){
+        this.t=t;
+        this.filaJugador = 5;
+        this.columnaJugador = 5;
         this.escenario = escenario;
+        
     }
     
     public void moverJugadorDerecha(){
@@ -29,10 +32,14 @@ public class Jugador implements Constantes{
                     escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador+1].TipoCelda(TIPO_JUGADOR);
                     this.columnaJugador++;
                     escenario.nuevaRecompensa();
-                    escenario.t.tiempoRestante=escenario.t.tiempoRestante+5;
-              }
+                    //escenario.t.tiempoRestante=escenario.t.tiempoRestante+6;
+                    escenario.t.sumarTiempo(6);
+              }else
               if(escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador+1].obtenerTipo()== TIPO_ENEMIGO){
-                   JOptionPane.showMessageDialog(null,"PERDISTE PO COMPRADRE");
+                   escenario.pararEnemigos();
+                   t.stop();
+                   JOptionPane.showMessageDialog(null,"PERDISTE TU TIEMPO ES: "+t.labelTiempoTotal.getText()+" SEGUNDOS");
+                   
                    //escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador].obtenerTipo()
               }
           }
@@ -54,11 +61,14 @@ public class Jugador implements Constantes{
                     escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador-1].TipoCelda(TIPO_JUGADORI);
                     this.columnaJugador--;
                     escenario.nuevaRecompensa();
-                    escenario.t.tiempoRestante=escenario.t.tiempoRestante+5;
+                    //escenario.t.tiempoRestante=escenario.t.tiempoRestante+6;
+                    escenario.t.sumarTiempo(6);
                    
-                }
+                }else
                 if(escenario.obtenerCeldas()[this.filaJugador][this.columnaJugador-1].obtenerTipo()== TIPO_ENEMIGO){
-                    JOptionPane.showMessageDialog(null,"PERDISTE PO COMPRADRE");
+                    escenario.pararEnemigos();
+                    t.stop();
+                    JOptionPane.showMessageDialog(null,"PERDISTE TU TIEMPO ES: "+t.labelTiempoTotal.getText()+" SEGUNDOS");
                     
                 }
             }
@@ -79,10 +89,13 @@ public class Jugador implements Constantes{
                      escenario.obtenerCeldas()[this.filaJugador -1][this.columnaJugador].TipoCelda(TIPO_JUGADORAR);
                      this.filaJugador--;
                      escenario.nuevaRecompensa();
-                     escenario.t.tiempoRestante=escenario.t.tiempoRestante+5;
-                }
+                     //escenario.t.tiempoRestante=escenario.t.tiempoRestante+6;
+                     escenario.t.sumarTiempo(6);
+                }else
                 if(escenario.obtenerCeldas()[this.filaJugador-1][this.columnaJugador].obtenerTipo()== TIPO_ENEMIGO){
-                    JOptionPane.showMessageDialog(null,"PERDISTE PO COMPRADRE");
+                    escenario.pararEnemigos();
+                    t.stop();
+                    JOptionPane.showMessageDialog(null,"PERDISTE TU TIEMPO ES: "+t.labelTiempoTotal.getText()+" SEGUNDOS");
                 }
             }
         }
@@ -101,13 +114,25 @@ public class Jugador implements Constantes{
                     escenario.obtenerCeldas()[this.filaJugador +1][this.columnaJugador].TipoCelda(TIPO_JUGADORAB);
                     this.filaJugador++;
                     escenario.nuevaRecompensa();
-                    escenario.t.tiempoRestante=escenario.t.tiempoRestante+5;
-               }
+                    //escenario.t.tiempoRestante=escenario.t.tiempoRestante+6;
+                    escenario.t.sumarTiempo(6);
+               }else
                if(escenario.obtenerCeldas()[this.filaJugador+1][this.columnaJugador].obtenerTipo()== TIPO_ENEMIGO){
-                    JOptionPane.showMessageDialog(null,"PERDISTE PO COMPRADRE");
+                   escenario.pararEnemigos();
+                   t.stop(); 
+                   JOptionPane.showMessageDialog(null,"PERDISTE TU TIEMPO ES: "+t.labelTiempoTotal.getText()+" SEGUNDOS");
                }
             }
             
         }
+    }
+    
+    public int getFilaJugador(){
+       
+        return this.filaJugador;
+    }
+    public int getColumnaJugador(){
+
+        return this.columnaJugador;
     }
 }
